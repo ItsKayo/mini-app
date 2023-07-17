@@ -1,5 +1,13 @@
-import './App.css';
-import {useState, useEffect} from 'react'
+import './App.css'
+import WatchedList from './WatchedList'
+import WatchList from './WatchList'
+import MovieInfo from './MovieInfo'
+import AddMovie from './AddMovie'
+import Home from './Home'
+import React, {useState, useEffect, createContext} from 'react'
+import {Routes, Route, Link} from 'react-router-dom'
+
+export const ParentContext = createContext();
 
 function App() {
   // const movies = [
@@ -11,36 +19,25 @@ function App() {
   // ];
 
   const [movies, setMovies] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [search, setSearch] = useState(searchTerm)
 
   useEffect(() => {
-    fetch('http://localhost:3001')
+    fetch('http://localhost:3001/')
       .then(res => res.json())
       .then(data => setMovies(data))
   }, [])
 
-  const renderList = () => {
-    if (searchTerm === '' && search === '') {
-      return movies.map(element => <li key={element.id}>{element.title}</li>)
-    }
-    else if (searchTerm === '' && search !== '') {
-      setSearch(searchTerm)
-      return movies.map(element => <li key={element.id}>{element.title}</li>)
-    }
-    else {
-      return movies.filter(movie => movie.title.toLowerCase().includes(search.toLowerCase().trim())).map(filtered => <li key={filtered.id}>{filtered.title}</li>)
-    }
-  }
+  // console.log(movies)
 
   return (
-    <div className="App">
-      <input type='search' name='searchBox' placeholder='Search...' onChange={e => setSearchTerm(e.target.value)}/>
-      <button onClick={() => setSearch(searchTerm)}>Search</button>
-      <ul>
-        {renderList()}
-      </ul>
-    </div>
+    <ParentContext.Provider value={movies}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/watched" element={<WatchedList />} />
+        <Route path="/watch" element={<WatchList />} />
+        <Route path="/movieinfo/:title" element={<MovieInfo />} />
+        <Route path="/addmovie" element={<AddMovie />} />
+      </Routes>
+    </ParentContext.Provider>
   );
 }
 
