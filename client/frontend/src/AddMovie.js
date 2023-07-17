@@ -34,50 +34,61 @@ function MovieInfo() {
 
     return (
         <div>
-            <Link to="/">Home</Link>
+            <section className="nav">
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                </ul>
+            </section>
 
-            <form>
-                <label>Title:</label><br/>
-                <input type='text' placeholder='Title' onChange={e => setTitle(e.target.value)}/>
-                <br/>
-                
+            <section className="addForm">
+                <form>
+                    <div className="formSection">
+                        <label>Title:</label>
+                        <input type='text' placeholder='Title' onChange={e => setTitle(e.target.value)}/>
+                    </div>
+                    
+                    <div className="formSection">
+                        <label>Image:</label>
+                        <input type='text' placeholder='Image Link' onChange={e => setImage(e.target.value)}/>
+                    </div>
+                    
+                    <div className="formSection">
+                        <label>Description:</label>
+                        <textarea placeholder='Description' onChange={e => setDescription(e.target.value)}/>
+                    </div>
 
-                <label>Image:</label><br/>
-                <input type='text' placeholder='Image Link' onChange={e => setImage(e.target.value)}/>
-                <br/>
-                
+                    <div className="formSection">
+                        <label>Date Released:</label>
+                        <input type='date' onChange={e => setReleased(e.target.value)}/>
+                    </div>
 
-                <label>Description:</label><br/>
-                <textarea placeholder='Description' onChange={e => setDescription(e.target.value)}/>
-                <br/>
-                
+                    <div className="formSection">
+                        <label>Director:</label>
+                        <input type='text' placeholder='Director' onChange={e => setDirector(e.target.value)}/>
+                    </div>
 
-                <label>Date Released:</label><br/>
-                <input type='date' onChange={e => setReleased(e.target.value)}/>
-                <br/>
-                
+                    <div className="formSection">
+                        <label>Watched:</label>
+                        <input type="radio" id="Yes" value="Yes" name='watched' onChange={e => {setWatched(true);}}/>
+                        <label htmlFor="Yes">Yes</label>
+                        <input type="radio" id="No" value="No" name='watched' onChange={e => {setWatched(false);}}/>
+                        <label htmlFor="No">No</label>
+                    </div>
 
-                <label>Director:</label><br/>
-                <input type='text' placeholder='Director' onChange={e => setDirector(e.target.value)}/>
-                <br/>
-
-                <label>Watched:</label><br/>
-                <input type="radio" id="Yes" value="Yes" name='watched' onChange={e => {
-                        setWatched(true);
-                    }
-                }/><label htmlFor="Yes">Yes</label>
-                <input type="radio" id="No" value="No" name='watched' onChange={e => {
-                        setWatched(false);
-                    }
-                }/><label htmlFor="No">No</label>
-                <br/>
-                <button onClick={() => addMovie()}>Add Movie</button>
-            </form>
+                    <div className="formSection">
+                        <button onClick={() => addMovie()}>Add Movie</button>
+                    </div>
+                </form>
+            </section>
             
-            <h1>Current Movie List:</h1>
-            <ul>
-                {movies.map(element => <li key={element.id}>{element.title}&nbsp;</li>)}
-            </ul>
+            <div className='current'>
+                <section>
+                    <h1>Current Movie List:</h1>
+                    <ul>
+                        {movies.map(element => <li key={element.id}>{element.title}&nbsp;</li>)}
+                    </ul>
+                </section>
+            </div>
         </div>
     )
 }
